@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import css from './Container.module.css';
+import css from './Layout.module.css';
 
-const Container = ({ children }) => {
+const Layout = ({ children }) => {
     return <div className={css.container}>{children}</div>;
   };
   
-  Container.propTypes = {
+  Layout.propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]).isRequired,
   };
   
-  export default Container;
+  export default Layout;
