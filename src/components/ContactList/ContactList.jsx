@@ -1,9 +1,14 @@
+import { useSelector } from 'react-redux';
 import { ContactItem } from 'components/ContactItem/ContactItem';
+import { getContacts } from 'redux/selectors';
 import PropTypes from 'prop-types';
 
 import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts, handleClickDelete }) => {
+
+export const ContactList = ({ handleClickDelete }) => {
+const contacts = useSelector(getContacts);
+
   return (
     <div>
       {contacts.length > 0 && (
