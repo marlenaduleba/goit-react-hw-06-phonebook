@@ -24,9 +24,11 @@ export const ContactForm = ({ onAddContact }) => {
     switch (name) {
       case 'name':
         setName(value);
+        console.log(e.currentTarget);
         break;
       case 'number':
         setNumber(value);
+        console.log(e.currentTarget);
         break;
       default:
         return;
