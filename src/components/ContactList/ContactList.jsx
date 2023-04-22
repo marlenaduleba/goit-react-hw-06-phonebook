@@ -1,26 +1,23 @@
 import { useSelector } from 'react-redux';
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { getContacts } from 'redux/selectors';
-import PropTypes from 'prop-types';
+
 
 import css from './ContactList.module.css';
 
 
-export const ContactList = ({ handleClickDelete }) => {
+export const ContactList = () => {
 const contacts = useSelector(getContacts);
 
   return (
     <div>
       {contacts.length > 0 && (
         <ul className={css.list}>
-          {contacts.map(({ id, name, number }) => (
+          {contacts.map((contact) => (
             <ContactItem
-              key={id}
-              name={name}
-              number={number}
-              handleClickDelete={() => {
-                handleClickDelete(id);
-              }}
+              key={contact.id}
+              contact={contact}
+             
             />
           ))}
         </ul>
@@ -29,13 +26,4 @@ const contacts = useSelector(getContacts);
   );
 };
 
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  handleClickDelete: PropTypes.func.isRequired,
-};
+

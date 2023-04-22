@@ -1,12 +1,19 @@
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contactsSlice';
 import PropTypes from 'prop-types';
 
 import css from './ContactItem.module.css';
 
-export const ContactItem = ({ name, number, handleClickDelete }) => {
+export const ContactItem = ({ contact }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => dispatch(deleteContact(contact.id));
+
   return (
     <li className={css.item}>
-      <span className={css.name}>{name}</span>: <span>{number}</span>
-      <button className={css.btn} onClick={handleClickDelete} type="button">
+      <span className={css.name}>{contact.name}</span>:{' '}
+      <span>{contact.number}</span>
+      <button className={css.btn} onClick={handleDelete} type="button">
         Delete
       </button>
     </li>
@@ -14,7 +21,5 @@ export const ContactItem = ({ name, number, handleClickDelete }) => {
 };
 
 ContactItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  handleClickDelete: PropTypes.func.isRequired,
+  contact: PropTypes.objectOf(PropTypes.string),
 };
