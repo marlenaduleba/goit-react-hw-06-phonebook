@@ -1,45 +1,50 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
-import { getNameValue, getNumberValue } from 'redux/selectors';
-import { setNameValue, setNumberValue } from 'redux/valuesSlice';
+import { getContacts } from 'redux/selectors';
+import { useReducer } from 'react';
 
-
-import PropTypes from 'prop-types';
-
+//import PropTypes from 'prop-types';
 
 import css from './ContactForm.module.css';
 
+const initialValues = {
+  nameValue: '',
+  numberValue: '',
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "name":
+      return {...state, nameValue: action.payload};
+    case "number":
+      return {...state, numberValue: action.payload};
+    case "reset":
+      return {...action.payload};
+    default:
+      return state;
+  }
+}
+
 export const ContactForm = () => {
-
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+  const { name, number } = contacts;
 
-  const nameValue = useSelector(getNameValue);
-  const numbervalue = useSelector(getNumberValue);
-
+  const [state, dispatchReducer] = useReducer(reducer, initialValues);
 
   const handleFormSubmit = e => {
     e.preventDefault();
 
-    dispatch(addContact(nameValue, numbervalue));
-    dispatch(setNameValue(''));
-    dispatch(setNumberValue(''));
+    dispatch(addContact(state.nameValue, state.numberValue));
+    dispatchReducer({type: "reset", payload: initialValues});
 
     e.currentTarget.reset();
   };
 
   const handleInputChange = e => {
     const { name, value } = e.currentTarget;
-
-    switch (name) {
-      case 'name':
-        dispatch(setNameValue(value));
-        break;
-      case 'number':
-        dispatch(setNumberValue(value));
-        break;
-      default:
-        return;
-    }
+    dispatchReducer({type: name, payload: value});
+   
   };
 
   return (
@@ -51,7 +56,7 @@ export const ContactForm = () => {
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          value={nameValue}
+          value={name}
           onChange={handleInputChange}
           required
         />
@@ -64,7 +69,7 @@ export const ContactForm = () => {
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          value={numbervalue}
+          value={number}
           onChange={handleInputChange}
           required
         />
@@ -74,8 +79,4 @@ export const ContactForm = () => {
       </button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 };
