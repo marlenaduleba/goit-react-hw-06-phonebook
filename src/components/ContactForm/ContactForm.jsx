@@ -14,16 +14,16 @@ const initialValues = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "name":
-      return {...state, nameValue: action.payload};
-    case "number":
-      return {...state, numberValue: action.payload};
-    case "reset":
-      return {...action.payload};
+    case 'name':
+      return { ...state, nameValue: action.payload };
+    case 'number':
+      return { ...state, numberValue: action.payload };
+    case 'reset':
+      return { ...action.payload };
     default:
       return state;
   }
-}
+};
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -36,15 +36,12 @@ export const ContactForm = () => {
     e.preventDefault();
 
     dispatch(addContact(state.nameValue, state.numberValue));
-    dispatchReducer({type: "reset", payload: initialValues});
-
-    e.currentTarget.reset();
+    dispatchReducer({ type: 'reset', payload: initialValues });
   };
 
   const handleInputChange = e => {
     const { name, value } = e.currentTarget;
-    dispatchReducer({type: name, payload: value});
-   
+    dispatchReducer({ type: name, payload: value });
   };
 
   return (
