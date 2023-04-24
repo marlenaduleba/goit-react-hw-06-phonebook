@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-//import produce from 'immer';
+import produce from 'immer';
 
 const filterInitialState = '';
 
@@ -8,10 +8,10 @@ export const filterSlice = createSlice({
   initialState: filterInitialState,
   reducers: {
     setFilter(state, action) {
-        state = action.payload;
-    //   return produce(state, draftState => {
-    //     draftState = action.payload;
-    //   });
+        //state = action.payload;
+      return produce(state, draftState => {
+        draftState = action.payload;
+      });
     },
   },
 });

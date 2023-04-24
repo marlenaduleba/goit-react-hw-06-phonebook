@@ -7,8 +7,12 @@ import css from './Filter.module.css';
 export const Filter = () => {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+
+  const handleFilter = e => {
+    dispatch(setFilter(e.target.value));
+    console.log(e.target.value);
   
-  const handleFilter = e => dispatch(setFilter(e.target.value));
+  };
 
   return (
     <div>
