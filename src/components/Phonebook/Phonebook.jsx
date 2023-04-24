@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState,  useMemo } from 'react';
 import { Section } from 'components/Section/Section';
 import { Filter } from 'components/Filter/Filter';
 import { ContactForm } from 'components/ContactForm/ContactForm';
@@ -12,33 +12,33 @@ export const Phonebook = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    try {
-      const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+  // useEffect(() => {
+  //   try {
+  //     const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
 
-      if (parsedContacts) {
-        setContacts(parsedContacts);
-      } else {
-        setContacts([
-          { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-          { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-          { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-          { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  //     if (parsedContacts) {
+  //       setContacts(parsedContacts);
+  //     } else {
+  //       setContacts([
+  //         { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  //         { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  //         { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  //         { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
         
-        ]);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
+  //       ]);
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (!contacts.length) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!contacts.length) {
+  //     return;
+  //   }
 
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
   const onAddContact = contact => {
     const searchUnique = contact.name.toLowerCase();
