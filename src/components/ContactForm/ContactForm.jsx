@@ -4,8 +4,6 @@ import { getContacts } from 'redux/selectors';
 import { useReducer } from 'react';
 import { Notify } from 'notiflix';
 
-//import PropTypes from 'prop-types';
-
 import css from './ContactForm.module.css';
 
 const initialValues = {
