@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
-import { setContacts } from 'redux/contactsSlice';
-import { useReducer, useEffect } from 'react';
-//import { Notify } from 'notiflix';
+import { useReducer } from 'react';
+import { Notify } from 'notiflix';
 
 //import PropTypes from 'prop-types';
 
@@ -31,15 +30,27 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const { name, number } = contacts;
-  
+
   const [state, dispatchReducer] = useReducer(reducer, initialValues);
 
   const handleFormSubmit = e => {
     e.preventDefault();
 
-    dispatch(addContact(state.nameValue, state.numberValue));
+    if (nameUnique(state.nameValue)) {
+      dispatch(addContact(state.nameValue, state.numberValue));
+    }
+
     dispatchReducer({ type: 'reset', payload: initialValues });
-    
+  };
+
+  const nameUnique = newName => {
+    const searchUnique = newName.toLowerCase();
+
+    if (contacts.find(({ name }) => name.toLowerCase() === searchUnique)) {
+      Notify.failure(`${newName} is already in contacts.`);
+      return false;
+    }
+    return true;
   };
 
   const handleInputChange = e => {
