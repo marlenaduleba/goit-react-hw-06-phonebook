@@ -7,16 +7,16 @@ import { Notify } from 'notiflix';
 import css from './ContactForm.module.css';
 
 const initialValues = {
-  nameValue: '',
-  numberValue: '',
+  name: '',
+  number: '',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'name':
-      return { ...state, nameValue: action.payload };
+      return { ...state, name: action.payload };
     case 'number':
-      return { ...state, numberValue: action.payload };
+      return { ...state, number: action.payload };
     case 'reset':
       return { ...action.payload };
     default:
@@ -27,15 +27,15 @@ const reducer = (state, action) => {
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const { name, number } = contacts;
+  
 
-  const [state, dispatchReducer] = useReducer(reducer, initialValues);
+  const [{name, number}, dispatchReducer] = useReducer(reducer, initialValues);
 
   const handleFormSubmit = e => {
     e.preventDefault();
 
-    if (nameUnique(state.nameValue)) {
-      dispatch(addContact(state.nameValue, state.numberValue));
+    if (nameUnique(name)) {
+      dispatch(addContact(name, number));
     }
 
     dispatchReducer({ type: 'reset', payload: initialValues });
